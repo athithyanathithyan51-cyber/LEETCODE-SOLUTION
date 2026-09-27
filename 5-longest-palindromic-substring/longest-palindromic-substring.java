@@ -1,26 +1,25 @@
 class Solution {
-    static boolean checkPalin(String s,int l,int r){
-            while(l<r){
-                if(s.charAt(l)!=s.charAt(r)){
-                    return false;
-                }
-                l++;
-                r--;
-            }
-            return true;
+    static int expand(String s,int l,int r){
+        while(l>=0 && r<s.length() && s.charAt(l)==s.charAt(r)){
+            l--;
+            r++;
         }
+        return r-l-1;
+    }
     public String longestPalindrome(String s) {
         int n = s.length();
-        String res = "";
+        int start = 0;
+        int end =0;
         for(int i=0;i<n;i++){
-            for(int j=i;j<n;j++){
-                if(checkPalin(s,i,j)==true){
-                    if(j-i+1>res.length()){
-                        res = s.substring(i,j+1);
-                    }
-                }
+            int len1 = expand(s,i,i);
+            int len2 = expand(s,i,i+1);
+            int max = Math.max(len1,len2);
+
+            if(max>(end-start)){
+                start = i-(max-1)/2;
+                end = i+(max)/2;
             }
         }
-        return res;
+        return s.substring(start,end+1);
     }
 }
