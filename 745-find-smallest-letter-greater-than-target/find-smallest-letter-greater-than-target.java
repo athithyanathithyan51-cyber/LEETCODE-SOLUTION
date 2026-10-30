@@ -1,12 +1,23 @@
 class Solution {
     public char nextGreatestLetter(char[] letters, char target) {
         int n = letters.length;
-        for(int i=0;i<n;i++){
-            char ch = letters[i];
-            if(target < ch){
-                return ch;
-            }
+        if(target > letters[n-1]){
+            return letters[0];
         }
-        return letters[0];
+        //binary search
+        int left = 0;
+        int right = n-1;
+        while(left<=right){
+            int mid = left + (right-left) /2;
+            if(target < letters[mid]){
+                right = mid-1;
+            }
+            else{
+                left = mid+1;
+            }
+
+        }
+        
+        return letters[left%n];
     }
 }
